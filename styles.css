@@ -1,0 +1,161 @@
+/* chzzk_grouper/styles.css */
+
+.chzzk-grouper-container {
+    position: relative !important;
+    padding: 10px !important;
+    border: 1px solid #2f2f2f !important;
+    border-radius: 8px !important;
+    background-color: #1a1a1a !important;
+    color: #f0f0f0 !important;
+    margin-top: 20px !important;
+}
+
+.chzzk-grouper-group-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 8px 12px !important;
+    background-color: #2a2a2a !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    font-weight: bold !important;
+}
+
+.chzzk-grouper-group-header:hover {
+    background-color: #3a3a3a !important;
+}
+
+.chzzk-grouper-group-list {
+    display: none !important;
+    margin-top: 8px !important;
+    padding-left: 15px !important;
+    border-left: 2px solid #5a5a5a !important;
+}
+
+.chzzk-grouper-group-list.expanded {
+    display: block !important;
+}
+
+.chzzk-grouper-button {
+    background-color: #5a5a5a !important;
+    color: white !important;
+    border: none !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    font-size: 14px !important;
+    margin-left: 10px !important;
+}
+
+.chzzk-grouper-button:hover {
+    background-color: #6a6a6a !important;
+}
+
+.chzzk-grouper-group-container {
+    border-bottom: 1px solid #2f2f2f !important;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+
+.chzzk-grouper-group-container:last-child {
+    border-bottom: none !important;
+}
+
+.chzzk-grouper-group-item {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 5px 0 !important;
+    font-size: 14px !important;
+}
+
+.chzzk-grouper-group-item.drag-over {
+    border: 2px dashed #007bff !important;
+    background-color: #333 !important;
+}
+
+.drag-handle {
+    cursor: grab !important;
+    color: #888;
+    padding: 0 8px;
+    user-select: none;
+}
+
+.drag-handle:active {
+    cursor: grabbing !important;
+}
+
+.group-drag-handle {
+    font-size: 20px;
+}
+
+.streamer-drag-handle {
+    font-size: 18px;
+    writing-mode: vertical-rl;
+}
+
+.group-buttons {
+    display: flex !important;
+    gap: 8px !important;
+}
+
+.chzzk-grouper-streamer-item {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 5px 0 !important;
+}
+
+.chzzk-grouper-streamer-item.drop-indicator {
+    border-top: 2px solid #00c73c !important;
+}
+
+.chzzk-grouper-streamer-item a {
+    text-decoration: none !important;
+    color: inherit !important;
+    display: flex !important;
+    align-items: center !important;
+    flex-grow: 1 !important;
+    min-width: 0;
+}
+
+.chzzk-grouper-streamer-item a:hover {
+    text-decoration: underline !important;
+}
+
+.chzzk-grouper-streamer-item a span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chzzk-grouper-streamer-profile {
+    width: 26px !important;
+    height: 26px !important;
+    border-radius: 50% !important;
+    margin-right: 10px !important;
+    object-fit: cover !important;
+    border: 1px solid transparent !important;
+}
+
+.chzzk-grouper-streamer-profile.is-live {
+    border-color: #00ff73 !important;
+}
+
+.streamer-delete-btn {
+    background-color: #4f4f4f !important;
+    color: #e0e0e0 !important;
+    border: none !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    font-size: 12px !important;
+    padding: 4px 8px !important;
+    margin-left: 10px !important;
+    flex-shrink: 0 !important;
+    transition: background-color 0.2s, color 0.2s !important;
+}
+
+.streamer-delete-btn:hover {
+    background-color: #e53e3e !important;
+    color: white !important;
+}
