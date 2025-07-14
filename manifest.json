@@ -1,0 +1,23 @@
+// chzzk_grouper/manifest.json
+{
+  "manifest_version": 3,
+  "name": "치지직 스트리머 그룹 도우미",
+  "version": "1.0",
+  "description": "팔로잉하는 치지직 스트리머를 그룹별로 정리하고 관리합니다.",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://chzzk.naver.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://chzzk.naver.com/*"],
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}

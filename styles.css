@@ -1,0 +1,135 @@
+/* chzzk_grouper/styles.css */
+
+/* 확장 프로그램이 추가할 UI에만 영향을 주도록 클래스명을 고유하게 설정합니다. */
+.chzzk-grouper-container {
+    position: relative !important;
+    padding: 10px !important;
+    border: 1px solid #2f2f2f !important;
+    border-radius: 8px !important;
+    background-color: #1a1a1a !important;
+    color: #f0f0f0 !important;
+    margin-top: 20px !important;
+}
+
+.chzzk-grouper-group-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 8px 12px !important;
+    background-color: #2a2a2a !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    font-weight: bold !important;
+}
+
+.chzzk-grouper-group-header:hover {
+    background-color: #3a3a3a !important;
+}
+
+/* 그룹 목록 컨테이너 */
+.chzzk-grouper-group-list {
+    display: none !important;
+    margin-top: 8px !important;
+    padding-left: 15px !important;
+    border-left: 2px solid #5a5a5a !important;
+}
+
+/* 그룹이 열렸을 때 보이도록 설정합니다. */
+.chzzk-grouper-group-list.expanded {
+    display: block !important;
+}
+
+.chzzk-grouper-button {
+    background-color: #5a5a5a !important;
+    color: white !important;
+    border: none !important;
+    padding: 8px 12px !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    font-size: 14px !important;
+    margin-left: 10px !important;
+}
+
+.chzzk-grouper-button:hover {
+    background-color: #6a6a6a !important;
+}
+
+.chzzk-grouper-group-item {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 5px 0 !important;
+    font-size: 14px !important;
+    border-bottom: 1px solid #2f2f2f !important;
+}
+
+.chzzk-grouper-group-item:last-child {
+    border-bottom: none !important;
+}
+
+/* 드롭 영역 스타일 */
+.chzzk-grouper-group-item.drag-over {
+    border: 2px dashed #007bff !important;
+    background-color: #333 !important;
+}
+
+/* 스트리머 목록 아이템 스타일 */
+.chzzk-grouper-streamer-item {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 5px 0 !important;
+}
+
+.chzzk-grouper-streamer-item a {
+    text-decoration: none !important;
+    color: inherit !important;
+    display: flex !important;
+    align-items: center !important;
+    flex-grow: 1 !important;
+    min-width: 0;
+}
+
+.chzzk-grouper-streamer-item a:hover {
+    text-decoration: underline !important;
+}
+
+.chzzk-grouper-streamer-item a span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* 그룹 내 스트리머 프로필 이미지 스타일 */
+.chzzk-grouper-streamer-profile {
+    width: 26px !important;
+    height: 26px !important;
+    border-radius: 50% !important;
+    margin-right: 10px !important;
+    object-fit: cover !important;
+    border: 1px solid transparent !important;
+}
+
+.chzzk-grouper-streamer-profile.is-live {
+    border-color: #00ff73 !important;
+}
+
+/* 스트리머 개별 삭제 버튼 스타일 */
+.streamer-delete-btn {
+    background-color: #4f4f4f !important;
+    color: #e0e0e0 !important;
+    border: none !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    font-size: 12px !important;
+    padding: 4px 8px !important;
+    margin-left: 10px !important;
+    flex-shrink: 0 !important;
+    transition: background-color 0.2s, color 0.2s !important;
+}
+
+.streamer-delete-btn:hover {
+    background-color: #e53e3e !important;
+    color: white !important;
+}
