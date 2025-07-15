@@ -49,14 +49,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (chrome.runtime.lastError) return;
         });
     });
-});
 
-  // ✨ [추가] 데이터 관리 기능
     const exportDataBtn = document.getElementById('export-data-btn');
     const importDataBtn = document.getElementById('import-data-btn');
     const importFileInput = document.getElementById('import-file-input');
 
-    // 데이터 내보내기 버튼 이벤트 리스너
     exportDataBtn.addEventListener('click', () => {
         chrome.storage.local.get('chzzk_grouper_groups', (data) => {
             const groups = data.chzzk_grouper_groups || [];
@@ -72,12 +69,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 데이터 가져오기 버튼 이벤트 리스너
     importDataBtn.addEventListener('click', () => {
         importFileInput.click();
     });
 
-    // 파일 입력 이벤트 리스너
     importFileInput.addEventListener('change', (event) => {
         const file = event.target.files[0];
         if (!file) return;
@@ -99,3 +94,4 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         reader.readAsText(file);
     });
+});
