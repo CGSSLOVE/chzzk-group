@@ -1,15 +1,10 @@
-// content.js (최종 완성본 - 모든 버그 해결 및 최종 개선)
-
-// ✨ [추가] 라이브 상태를 저장할 전역 변수
 let liveStreamerIds = new Set();
 let liveUpdateTimer = null;
 let isDraggingModal = false;
 let initialX, initialY, xOffset = 0, yOffset = 0;
 let modalContainer = null;
 
-// ✨ [수정] 모달 드래그 기능
 function dragStart(e) {
-    // 드래그를 시작하고 싶지 않은 요소들의 선택자를 정의합니다.
     const noDragSelectors = [
         '#close-modal-btn',
         '#add-group-btn',
@@ -17,21 +12,18 @@ function dragStart(e) {
         '.chzzk-grouper-button',
         '.edit-managed-group-btn',
         '.delete-managed-group-btn',
-        '.chzzk-grouper-streamer-item', // 모달 안의 스트리머 아이템 드래그 방지
+        '.chzzk-grouper-streamer-item',
         'input',
         'button',
-        'a', // 링크 태그를 추가하여 클릭을 방해하지 않도록 합니다.
+        'a',
     ];
 
-    // 클릭된 요소나 그 부모 요소가 드래그를 원하지 않는 요소에 포함되는지 확인합니다.
     for (const selector of noDragSelectors) {
         if (e.target.closest(selector)) {
-            console.log('[디버그] 드래그 금지 요소 클릭 감지. 드래그를 시작하지 않습니다.');
             return;
         }
     }
 
-    // 모달 컨테이너를 찾습니다.
     modalContainer = document.getElementById('chzzk-grouper-modal-container');
     if (!modalContainer) return;
 
@@ -44,9 +36,7 @@ function dragStart(e) {
     document.addEventListener('mouseup', dragEnd);
 }
 
-
 function dragEnd() {
-    console.log('[디버그] dragEnd 함수 호출'); // 디버그 로그 추가
     isDraggingModal = false;
     document.removeEventListener('mousemove', drag);
     document.removeEventListener('mouseup', dragEnd);
@@ -56,45 +46,35 @@ function drag(e) {
     if (isDraggingModal && modalContainer) {
         e.preventDefault();
 
-        // 뷰포트 크기 가져오기
         const viewportWidth = window.innerWidth;
         const viewportHeight = window.innerHeight;
 
-        // 모달의 크기 가져오기
         const modalRect = modalContainer.getBoundingClientRect();
         const modalWidth = modalRect.width;
         const modalHeight = modalRect.height;
 
-        // 마우스 위치 기반으로 새로운 좌표 계산
         let newX = e.clientX - initialX;
         let newY = e.clientY - initialY;
 
-        // 모달이 뷰포트를 벗어나지 않도록 경계값 설정
-        // 왼쪽 경계 (0보다 작아지지 않게)
         if (newX < 0) {
             newX = 0;
         }
-        // 오른쪽 경계 (뷰포트 너비 - 모달 너비보다 커지지 않게)
         if (newX + modalWidth > viewportWidth) {
             newX = viewportWidth - modalWidth;
         }
-        // 위쪽 경계 (0보다 작아지지 않게)
         if (newY < 0) {
             newY = 0;
         }
-        // 아래쪽 경계 (뷰포트 높이 - 모달 높이보다 커지지 않게)
         if (newY + modalHeight > viewportHeight) {
             newY = viewportHeight - modalHeight;
         }
 
-        // 새로운 위치를 모달에 적용
         modalContainer.style.setProperty('left', `${newX}px`, 'important');
         modalContainer.style.setProperty('top', `${newY}px`, 'important');
         modalContainer.style.setProperty('transform', `none`, 'important');
     }
 }
 
-// ✨ [최종 수정] 라이브 상태를 나타내는 클래스를 가진 부모 요소를 찾아 ID를 파싱
 function parseLiveStreamers() {
     liveStreamerIds.clear();
     const allStreamerElements = document.querySelectorAll('.navigator_item__qXlq9');
@@ -110,10 +90,8 @@ function parseLiveStreamers() {
             }
         }
     });
-    console.log('[Chzzk Grouper] 라이브 스트리머 정보 업데이트 완료:', liveStreamerIds);
 }
 
-// ✨ [추가] 라이브 상태를 주기적으로 업데이트하는 함수
 function startLiveStatusUpdater() {
     if (liveUpdateTimer) {
         clearInterval(liveUpdateTimer);
@@ -124,30 +102,23 @@ function startLiveStatusUpdater() {
     }, 10000);
 }
 
-// content.js 파일에서 getMenuElement 함수를 아래 코드로 교체하세요.
-
 function getMenuElement(menuName) {
     const allMenuWrappers = document.querySelectorAll('div.navigator_wrapper__ruh6f, div.header_service__DyG7M');
     for (const wrapper of allMenuWrappers) {
-        // 그룹 컨테이너는 제외합니다.
         if (wrapper.id === 'chzzk-grouper-container') {
             continue;
         }
 
-        // wrapper 내부의 모든 텍스트 요소를 찾습니다.
         const textElements = wrapper.querySelectorAll('h2, span, a');
         for (const element of textElements) {
-            // 미묘한 공백을 제거하고 메뉴 이름이 포함되어 있는지 확인합니다.
             if (element.textContent.trim().includes(menuName)) {
-                return wrapper; // 메뉴 이름을 포함하는 최상위 래퍼를 반환합니다.
+                return wrapper;
             }
         }
     }
     return null;
 }
 
-
-// ✨ [수정] 메뉴 설정을 적용하는 함수
 function applyMenuSettings() {
     chrome.storage.local.get('hiddenMenus', (data) => {
         if (chrome.runtime.lastError) return;
@@ -157,12 +128,7 @@ function applyMenuSettings() {
         menuNames.forEach(menuName => {
             const element = getMenuElement(menuName);
             if (element) {
-                console.log(`[디버그] '${menuName}' 메뉴를 찾았습니다. `);
-                // ✨ [수정] display 속성에 !important를 강제 적용하여 CSS 우선순위 문제를 해결합니다.
                 element.style.setProperty('display', hiddenMenus.includes(menuName) ? 'none' : '', 'important');
-                console.log(`[디버그] '${menuName}' 메뉴의 display 속성: ${element.style.display}`);
-            } else {
-                console.log(`[디버그] '${menuName}' 메뉴를 찾을 수 없습니다.`);
             }
         });
     });
@@ -172,7 +138,6 @@ let draggedStreamer = { id: null, element: null, ghostElement: null };
 let draggedGroup = { element: null, id: null, originalY: 0, ghostElement: null };
 let draggedStreamerInGroup = { element: null, ghostElement: null, sourceGroupId: null, sourceStreamerId: null, originalY: 0 };
 
-// ✨ [수정] 사이드바와 모달 모두에서 드래그 오버 클래스를 인식하도록 선택자 수정
 function handleStreamerInGroupMouseMove(event) {
     if (!draggedStreamerInGroup.ghostElement) return;
     draggedStreamerInGroup.ghostElement.style.transform = `translateY(${event.clientY - draggedStreamerInGroup.originalY}px)`;
@@ -184,7 +149,6 @@ function handleStreamerInGroupMouseMove(event) {
     }
 }
 
-// ✨ [수정] 사이드바와 모달 모두에서 드래그 엔드 로직이 작동하도록 선택자 수정
 async function handleStreamerInGroupMouseUp(event) {
     if (!draggedStreamerInGroup.sourceStreamerId) return;
 
@@ -222,7 +186,6 @@ async function handleStreamerInGroupMouseUp(event) {
     document.body.style.cursor = '';
     draggedStreamerInGroup = { element: null, ghostElement: null, sourceGroupId: null, sourceStreamerId: null, originalY: 0 };
 }
-
 
 function handleStreamerMouseMove(event) {
     if (!draggedStreamer.ghostElement) return;
@@ -296,7 +259,6 @@ async function handleGroupMouseUp(event) {
 }
 
 function makeElementsDraggable() {
-    console.log('[디버그] makeElementsDraggable 함수 호출'); // 디버그 로그 추가
     const streamerSelector = ".navigator_item__qXlq9";
     const streamerElements = document.querySelectorAll(streamerSelector);
     streamerElements.forEach(element => {
@@ -397,18 +359,15 @@ async function editGroupName(groupId) {
 }
 
 async function getGroups() {
-    // ✨ [수정] sync -> local
     const data = await chrome.storage.local.get(storageKey);
     return data[storageKey] || [];
 }
 
 async function saveGroups(groups) {
-    // ✨ [수정] sync -> local
     await chrome.storage.local.set({ [storageKey]: groups });
 }
 
 async function addGroup(name) {
-    console.log(`[디버그] addGroup 함수 호출: ${name}`); // 디버그 로그 추가
     const groups = await getGroups();
     if (groups.some(group => group.name === name)) {
         alert("이미 같은 이름의 그룹이 존재합니다.");
@@ -431,7 +390,6 @@ async function deleteGroup(id) {
 async function renderGroups() {
     let retryCount = 0;
     while (liveStreamerIds.size === 0 && retryCount < 10) {
-        console.log('[Chzzk Grouper] 라이브 스트리머 정보 로딩 중... 잠시 후 재시도합니다.');
         await new Promise(resolve => setTimeout(resolve, 500));
         retryCount++;
     }
@@ -484,7 +442,7 @@ async function renderGroups() {
 
                 streamerItem.innerHTML = `
                     <div class="drag-handle streamer-drag-handle">⋮</div>
-                    <a href="https://chzzk.naver.com/live/${streamer.id}" target="_blank">
+                    <a href="https://chzzk.naver.com/live/${streamer.id}">
                         <img src="${streamer.profileImageUrl}" class="chzzk-grouper-streamer-profile" alt="${streamer.name} 프로필">
                         <span>${streamer.name}</span>
                         <div class="chzzk-grouper-tooltip">${streamer.name}</div>
@@ -571,15 +529,12 @@ async function renderGroups() {
     }
 }
 
-// ✨ [수정] 모달 창에 그룹 목록을 렌더링하는 함수
 async function renderManagedGroups() {
-    console.log('[디버그] renderManagedGroups 함수 호출'); // 디버그 로그 추가
     const manageGroupList = document.getElementById('manage-group-list');
     const newGroupNameInput = document.getElementById('new-group-name');
     const addGroupBtn = document.getElementById('add-group-btn');
 
     if (!manageGroupList || !newGroupNameInput || !addGroupBtn) {
-        console.error('[디버그] 모달 내 요소를 찾을 수 없습니다. (manage-group-list, new-group-name, add-group-btn)');
         return;
     }
 
@@ -593,7 +548,6 @@ async function renderManagedGroups() {
 
         const groupHeader = document.createElement('div');
         groupHeader.className = 'manage-group-header';
-        // ✨ [수정] 이전 버전의 HTML 구조로 복구
         groupHeader.innerHTML = `
             <span class="manage-group-name-wrapper">
                 <span class="manage-group-name">${group.name}</span>
@@ -606,7 +560,6 @@ async function renderManagedGroups() {
         `;
         groupContainer.appendChild(groupHeader);
 
-        // ✨ [수정] 스트리머 ID 입력 섹션을 모달 헤더 아래에 추가
         const addStreamerSection = document.createElement('div');
         addStreamerSection.className = 'add-streamer-section-modal';
         addStreamerSection.innerHTML = `
@@ -626,12 +579,11 @@ async function renderManagedGroups() {
             group.streamers.forEach(streamer => {
                 const streamerItem = document.createElement('div');
                 streamerItem.className = 'manage-streamer-item';
-                streamerItem.dataset.streamerId = streamer.id; // ✨ [추가] 드래그를 위해 dataset 추가
+                streamerItem.dataset.streamerId = streamer.id;
 
-                // ✨ [수정] 스트리머 아이콘 추가
                 streamerItem.innerHTML = `
                     <div class="drag-handle streamer-drag-handle">⋮</div>
-                    <a href="https://chzzk.naver.com/live/${streamer.id}" target="_blank" class="manage-streamer-profile-link">
+                    <a href="https://chzzk.naver.com/live/${streamer.id}" class="manage-streamer-profile-link">
                         <img src="${streamer.profileImageUrl}" class="chzzk-grouper-streamer-profile" alt="${streamer.name} 프로필">
                         <span>${streamer.name}</span>
                     </a>
@@ -641,7 +593,6 @@ async function renderManagedGroups() {
                 `;
                 streamerList.appendChild(streamerItem);
 
-                // ✨ [추가] 모달 내 스트리머 드래그 이벤트 리스너
                 streamerItem.querySelector('.streamer-drag-handle').addEventListener('mousedown', (e) => {
                     e.preventDefault();
                     draggedStreamerInGroup = {
@@ -673,9 +624,7 @@ async function renderManagedGroups() {
         groupContainer.appendChild(streamerList);
         manageGroupList.appendChild(groupContainer);
 
-        // 이벤트 리스너 추가
         groupHeader.addEventListener('click', async (e) => {
-            // 버튼 클릭 시 이벤트 전파 방지
             if (e.target.closest('button')) {
                 return;
             }
@@ -690,24 +639,23 @@ async function renderManagedGroups() {
         });
 
         groupHeader.querySelector('.edit-managed-group-btn').addEventListener('click', (e) => {
-            e.stopPropagation(); // 이벤트 전파 방지
+            e.stopPropagation();
             editGroupName(group.id);
         });
 
         groupHeader.querySelector('.delete-managed-group-btn').addEventListener('click', (e) => {
-            e.stopPropagation(); // 이벤트 전파 방지
+            e.stopPropagation();
             deleteGroup(group.id);
         });
 
         streamerList.querySelectorAll('.delete-streamer-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                e.stopPropagation(); // 이벤트 전파 방지
+                e.stopPropagation();
                 const streamerId = btn.dataset.streamerId;
                 removeStreamerFromGroup(group.id, streamerId);
             });
         });
 
-        // ✨ [추가] 스트리머 ID 입력으로 추가하는 기능
         const addStreamerInput = groupContainer.querySelector('.add-streamer-input');
         const addStreamerBtn = groupContainer.querySelector('.add-streamer-btn');
 
@@ -733,7 +681,6 @@ async function renderManagedGroups() {
 
     });
 
-    // ✨ [추가] 모달의 '새 그룹 추가' 버튼 이벤트 리스너
     addGroupBtn.onclick = () => {
         const groupName = newGroupNameInput.value.trim();
         if (groupName) {
@@ -743,15 +690,12 @@ async function renderManagedGroups() {
     };
 }
 
-// ✨ [수정] 그룹 위치를 'order'가 아닌 DOM 조작으로 변경하여 버그 해결
 function applyGroupPosition(showOnTop) {
-    // ✨ [수정] 부모 컨테이너 선택자를 더 안정적인 nav#navigation으로 변경
     const parentContainer = document.querySelector("nav#navigation");
     if (!parentContainer) return;
 
     const groupUI = document.getElementById('chzzk-grouper-container');
 
-    // ✨ [수정] '팔로잉 채널' 컨테이너를 텍스트로 찾습니다.
     let followingContainer = null;
     try {
         const allWrappers = parentContainer.querySelectorAll('.navigator_wrapper__ruh6f');
@@ -768,7 +712,6 @@ function applyGroupPosition(showOnTop) {
     }
 
     if (groupUI && followingContainer && parentContainer) {
-        // ✨ [수정] DOM 구조를 직접 조작하여 순서를 변경
         if (showOnTop) {
             parentContainer.prepend(groupUI);
         } else {
@@ -776,16 +719,12 @@ function applyGroupPosition(showOnTop) {
         }
     }
 
-    // 이 방식은 order 속성을 사용하지 않으므로 기존 order를 초기화
     Array.from(parentContainer.children).forEach(child => {
         child.style.order = '';
     });
 }
 
 async function initializeUI() {
-    console.log('[디버그] initializeUI 함수 호출'); // 디버그 로그 추가
-
-    // ✨ [수정] 초기화 시에도 팔로잉 컨테이너를 텍스트로 찾도록 변경
     let followingContainer = null;
     try {
         const allWrappers = document.querySelectorAll('.navigator_wrapper__ruh6f');
@@ -801,9 +740,7 @@ async function initializeUI() {
     }
 
     if (followingContainer && followingContainer.parentNode) {
-        console.log('[디버그] 팔로잉 컨테이너를 찾았습니다.'); // 디버그 로그 추가
         if (document.getElementById('chzzk-grouper-container')) {
-            console.log('[디버그] 그룹 UI가 이미 존재합니다. 드래그 기능만 다시 활성화합니다.'); // 디버그 로그 추가
             makeElementsDraggable();
             parseLiveStreamers();
            	startLiveStatusUpdater();
@@ -823,54 +760,42 @@ async function initializeUI() {
         followingContainer.after(groupContainer);
 
         const modalHTML = `
-    <div class="chzzk-grouper-modal-container" id="chzzk-grouper-modal-container">
-        <div class="chzzk-grouper-modal-header" id="modal-header">
-            <h3>그룹 관리</h3>
-            <button id="close-modal-btn">X</button>
-        </div>
-        <div class="chzzk-grouper-modal-body">
-            <h4>새 그룹 추가</h4>
-            <div class="add-group-section">
-                <input type="text" id="new-group-name" placeholder="새로운 그룹 이름">
-                <button id="add-group-btn" class="chzzk-grouper-button">추가</button>
+            <div class="chzzk-grouper-modal-container" id="chzzk-grouper-modal-container">
+                <div class="chzzk-grouper-modal-header" id="modal-header">
+                    <h3>그룹 관리</h3>
+                    <button id="close-modal-btn">X</button>
+                </div>
+                <div class="chzzk-grouper-modal-body">
+                    <h4>새 그룹 추가</h4>
+                    <div class="add-group-section">
+                        <input type="text" id="new-group-name" placeholder="새로운 그룹 이름">
+                        <button id="add-group-btn" class="chzzk-grouper-button">추가</button>
+                    </div>
+                    <hr>
+                    <h4>기존 그룹 관리</h4>
+                    <div id="manage-group-list"></div>
+                </div>
+                <div class="drag-handle-side drag-handle-left"></div>
+                <div class="drag-handle-side drag-handle-right"></div>
+                <div class="drag-handle-bottom"></div>
             </div>
-            <hr>
-            <h4>기존 그룹 관리</h4>
-            <div id="manage-group-list"></div>
-        </div>
-        <div class="drag-handle-side drag-handle-left"></div>
-        <div class="drag-handle-side drag-handle-right"></div>
-        <div class="drag-handle-bottom"></div>
-    </div>
-`;
-document.body.insertAdjacentHTML('beforeend', modalHTML);
-        console.log('[디버그] 그룹 UI 및 모달 HTML을 페이지에 추가했습니다.'); // 디버그 로그 추가
+        `;
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
 
         const data = await chrome.storage.local.get('groupPositionTop');
         applyGroupPosition(data.groupPositionTop || false);
 
-        // 모달 관련 이벤트 리스너를 한 곳에서 관리
         const modalBtn = document.getElementById('manage-groups-btn');
-if (modalBtn) {
-    modalBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const modal = document.getElementById('chzzk-grouper-modal-container');
-        if (modal) {
-            modal.style.setProperty('display', 'block', 'important');
-            // 여기서는 transform과 위치 속성을 제거하여 드래그 함수가 제어하도록 함
-            // modal.style.setProperty('top', '50%', 'important');
-            // modal.style.setProperty('left', '50%', 'important');
-            // modal.style.setProperty('transform', 'translate(-50%, -50%)', 'important');
-            modal.style.setProperty('z-index', '99999', 'important');
-
-            renderManagedGroups();
-        } else {
-            console.error('[디버그] 오류: 모달 요소를 찾을 수 없습니다.');
-        }
-    });
-}
- else {
-            console.error('[디버그] 오류: "관리" 버튼을 찾을 수 없습니다.'); // 디버그 로그 추가
+        if (modalBtn) {
+            modalBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const modal = document.getElementById('chzzk-grouper-modal-container');
+                if (modal) {
+                    modal.style.setProperty('display', 'block', 'important');
+                    modal.style.setProperty('z-index', '99999', 'important');
+                    renderManagedGroups();
+                }
+            });
         }
 
         const closeModalBtn = document.getElementById('close-modal-btn');
@@ -883,7 +808,6 @@ if (modalBtn) {
             });
         }
 
-        // 드래그 시작 이벤트 리스너 추가 (중복 방지)
         const modalHeader = document.getElementById('modal-header');
         if (modalHeader) {
             modalHeader.addEventListener('mousedown', dragStart);
@@ -897,17 +821,14 @@ if (modalBtn) {
 	    startLiveStatusUpdater();
 	    await renderGroups();
         makeElementsDraggable();
-    } else {
-        console.log('[디버그] 팔로잉 컨테이너를 찾을 수 없으므로 UI를 초기화하지 않습니다.'); // 디버그 로그 추가
     }
 }
 
 const observer = new MutationObserver((mutations) => {
     for (const mutation of mutations) {
         if (mutation.addedNodes.length) {
-            console.log('[디버그] DOM 변경 감지. initializeUI를 다시 시도합니다.');
             initializeUI();
-            applyMenuSettings(); // ✨ [추가] 메뉴를 다시 숨깁니다.
+            applyMenuSettings();
             break;
         }
     }
@@ -919,8 +840,6 @@ observer.observe(document.body, {
 });
 
 chrome.storage.onChanged.addListener((changes, namespace) => {
-    console.log('[디버그] chrome.storage 변경 감지'); // 디버그 로그 추가
-    // ✨ [수정] local 저장소의 변경을 감지하여 메뉴 설정을 다시 적용
     if (namespace === 'local') {
         if (changes.hiddenMenus) {
             applyMenuSettings();
@@ -930,7 +849,6 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
         }
         if (changes[storageKey]) {
             renderGroups();
-            // 모달이 열려있다면, 모달의 그룹 목록도 다시 렌더링
             const modal = document.getElementById('chzzk-grouper-modal-container');
             if (modal && modal.style.display === 'block') {
                 renderManagedGroups();
@@ -939,6 +857,5 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
     }
 });
 
-console.log('[디버그] content.js 스크립트 실행 시작'); // 디버그 로그 추가
 initializeUI();
 applyMenuSettings();
