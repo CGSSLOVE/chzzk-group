@@ -1,8 +1,3 @@
-/* styles.css */
-
-/* ✨ [최종 완성본 - 모든 버그 해결 및 최종 개선] */
-
-/* 메인 컨테이너 */
 .chzzk-grouper-container {
     position: relative !important;
     padding: 10px !important;
@@ -13,7 +8,6 @@
     margin-top: 20px !important;
 }
 
-/* ✨ [추가] 헤더 스타일 */
 #chzzk-grouper-header {
     display: flex !important;
     justify-content: space-between !important;
@@ -29,7 +23,6 @@
     flex-grow: 1 !important;
 }
 
-/* 그룹 헤더 */
 .chzzk-grouper-group-header {
     display: flex !important;
     justify-content: space-between !important;
@@ -45,19 +38,17 @@
     background-color: #3a3a3a !important;
 }
 
-/* 그룹 목록 */
 .chzzk-grouper-group-list {
     display: none !important;
     margin-top: 8px !important;
     padding-left: 5px !important;
-    border-left: 2px solid #5a5a5a !important; 
+    border-left: 2px solid #5a5a5a !important;
 }
 
 .chzzk-grouper-group-list.expanded {
     display: block !important;
 }
 
-/* 그룹 아이템 */
 .chzzk-grouper-group-item {
     display: flex !important;
     flex-direction: column !important;
@@ -67,7 +58,6 @@
     position: relative !important;
 }
 
-/* 그룹 컨테이너 */
 .chzzk-grouper-group-container {
     border-bottom: 1px solid #2f2f2f !important;
     padding-bottom: 5px;
@@ -78,7 +68,6 @@
     border-bottom: none !important;
 }
 
-/* ✨ [수정] 왼쪽 정렬을 위해 flex-start로 변경하고 gap 추가 */
 .group-item-row-1 {
     display: flex !important;
     align-items: center !important;
@@ -92,7 +81,6 @@
     margin-top: 4px !important;
 }
 
-/* ✨ [추가] 그룹 이름 및 카운트 재배치를 위해 새로운 스타일 */
 .group-right-info {
     display: flex !important;
     align-items: center !important;
@@ -101,7 +89,6 @@
     margin-left: auto;
 }
 
-/* ✨ [수정] 그룹 스트리머 수 스타일 */
 .group-streamer-count {
     font-weight: normal;
     font-size: 13px;
@@ -116,7 +103,6 @@
     cursor: pointer;
 }
 
-/* ✨ [추가] 그룹 이름과 툴팁을 묶는 컨테이너 */
 .group-name-wrapper {
     position: relative !important;
     display: flex !important;
@@ -150,7 +136,6 @@
     gap: 8px !important;
 }
 
-/* ✨ [수정] 왼쪽 정렬을 위해 justify-content: flex-start로 변경하고 gap 추가 */
 .chzzk-grouper-streamer-item {
     display: flex !important;
     justify-content: flex-start !important;
@@ -215,7 +200,6 @@
     color: white !important;
 }
 
-/* ✨ [수정] 툴팁 위치를 아래로 변경 */
 .chzzk-grouper-tooltip {
     visibility: hidden;
     opacity: 0;
@@ -228,7 +212,7 @@
     padding: 5px 10px;
     position: absolute;
     z-index: 1;
-    top: 125%; /* 아래로 위치 변경 */
+    top: 125%;
     left: 50%;
     transform: translateX(-50%);
     white-space: normal;
@@ -236,19 +220,17 @@
     pointer-events: none;
 }
 
-/* ✨ [수정] 툴팁 화살표를 위로 변경 */
 .chzzk-grouper-tooltip::after {
     content: "";
     position: absolute;
-    bottom: 100%; /* 위로 위치 변경 */
+    bottom: 100%;
     left: 50%;
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: transparent transparent #333 transparent; /* 화살표 방향 변경 */
+    border-color: transparent transparent #333 transparent;
 }
 
-/* ✨ [최종 수정] 이름 래퍼에 마우스를 올렸을 때, 그 안에 있는 툴팁을 표시 */
 .group-name-wrapper:hover .chzzk-grouper-tooltip {
     visibility: visible !important;
     opacity: 1 !important;
@@ -260,7 +242,6 @@
     min-width: 0 !important;
 }
 
-/* ✨ [추가됨] ... 처리를 위해 overflow 속성을 span으로 이동 */
 .group-name-span {
     display: block;
     white-space: nowrap;
@@ -270,7 +251,6 @@
     cursor: pointer;
 }
 
-/* [추가] 생방송 상태 표시를 위한 스타일 */
 .live-status-container {
     display: flex !important;
     align-items: center !important;
@@ -294,7 +274,6 @@
     font-weight: bold !important;
 }
 
-/* ✨ [수정] 모달 창 스타일 (드래그 가능하도록 수정) */
 .chzzk-grouper-modal-container {
     position: fixed !important;
     top: 50% !important;
@@ -309,7 +288,7 @@
     padding: 15px !important;
     display: none;
     transform: translate(-50%, -50%);
-    cursor: move !important; /* 모달 전체를 드래그 가능하게 변경 */
+    cursor: move !important;
 }
 
 .chzzk-grouper-modal-header {
@@ -338,7 +317,6 @@
     padding-bottom: 5px !important;
 }
 
-/* ✨ [수정] 이전 버전의 '새 그룹 추가' 섹션 스타일로 복구 */
 .add-group-section {
     display: flex !important;
     gap: 10px !important;
@@ -362,13 +340,11 @@
     border-bottom: 1px solid #2f2f2f !important;
 }
 
-/* ✨ [추가] 아이콘 버튼 스타일 */
 .chzzk-grouper-button .material-symbols-outlined {
     font-size: 16px;
     vertical-align: middle;
 }
 
-/* ✨ [추가] 클릭 가능 요소의 커서 스타일을 명확하게 지정 */
 .chzzk-grouper-button,
 .chzzk-grouper-group-header,
 .group-name-span,
@@ -377,17 +353,15 @@
 .add-group-section input,
 .add-group-section button,
 .manage-group-item button {
-    cursor: pointer !important; 
+    cursor: pointer !important;
 }
 
-/* ✨ [추가] 모달 내 그룹 목록 스타일 */
 .manage-group-container {
     border: 1px solid #2f2f2f !important;
     border-radius: 6px !important;
     margin-bottom: 10px !important;
 }
 
-/* ✨ [수정] 이전 버전의 모달 헤더 스타일로 복구 */
 .manage-group-header {
     display: flex !important;
     align-items: center !important;
@@ -403,7 +377,6 @@
     background-color: #3a3a3a !important;
 }
 
-/* ✨ [추가] 모달 내 그룹 이름과 카운트 컨테이너 */
 .manage-group-name-wrapper {
     display: flex !important;
     align-items: center !important;
@@ -412,7 +385,6 @@
     gap: 8px !important;
 }
 
-/* ✨ [추가] 모달 내 그룹 스트리머 수 스타일 */
 .manage-group-count {
     font-weight: normal !important;
     font-size: 13px !important;
@@ -435,7 +407,6 @@
     display: block !important;
 }
 
-/* ✨ [수정] 모달 스트리머 아이템에 드래그 핸들 공간 추가 및 정렬 */
 .manage-streamer-item {
     display: flex !important;
     justify-content: space-between !important;
@@ -466,13 +437,12 @@
     color: #e53e3e !important;
 }
 
-/* ✨ [수정] 모달의 스트리머 ID 입력 섹션 스타일 */
 .add-streamer-section-modal {
     display: flex !important;
     width: 100% !important;
     gap: 5px !important;
     margin-top: 5px;
-    padding: 8px 12px; /* 헤더와 동일한 패딩 */
+    padding: 8px 12px;
 }
 
 .add-streamer-input {
@@ -489,22 +459,18 @@
     border-color: #2196F3 !important;
 }
 
-/* ✨ [추가] 스크롤바 스타일 */
-/* 사이드바 그룹 리스트 */
 #group-list-area {
     max-height: 400px;
     overflow-y: auto;
-    padding-right: 5px; /* 스크롤바가 콘텐츠를 가리지 않도록 */
+    padding-right: 5px;
 }
 
-/* 모달 그룹 리스트 */
 #manage-group-list {
     max-height: 300px;
     overflow-y: auto;
-    padding-right: 5px; /* 스크롤바가 콘텐츠를 가리지 않도록 */
+    padding-right: 5px;
 }
 
-/* 스크롤바 기본 스타일 */
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -523,7 +489,6 @@
     background: #7a7a7a;
 }
 
-/* ✨ [추가] 모달 내 스트리머 프로필 링크 스타일 */
 .manage-streamer-profile-link {
     display: flex !important;
     align-items: center !important;
@@ -543,7 +508,6 @@
     text-overflow: ellipsis !important;
 }
 
-/* ✨ [추가] 사이드바 전체 레이아웃을 위한 오버라이드 스타일 */
 #navigation > div.navigator_wrapper__ruh6f {
     display: block !important;
 }
