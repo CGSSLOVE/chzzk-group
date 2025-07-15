@@ -1,0 +1,265 @@
+/* styles.css */
+
+.chzzk-grouper-container {
+    position: relative !important;
+    padding: 10px !important;
+    border: 1px solid #2f2f2f !important;
+    border-radius: 8px !important;
+    background-color: #1a1a1a !important;
+    color: #f0f0f0 !important;
+    margin-top: 20px !important;
+}
+
+.chzzk-grouper-group-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 8px 12px !important;
+    background-color: #2a2a2a !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    font-weight: bold !important;
+}
+
+.chzzk-grouper-group-header:hover {
+    background-color: #3a3a3a !important;
+}
+
+.chzzk-grouper-group-list {
+    display: none !important;
+    margin-top: 8px !important;
+    padding-left: 5px !important;
+    border-left: 2px solid #5a5a5a !important; 
+}
+
+.chzzk-grouper-group-list.expanded {
+    display: block !important;
+}
+
+.chzzk-grouper-button {
+    background-color: #5a5a5a !important;
+    color: white !important;
+    border: none !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    font-size: 14px !important;
+    margin-left: 10px !important;
+}
+
+.chzzk-grouper-button:hover {
+    background-color: #6a6a6a !important;
+}
+
+.chzzk-grouper-group-container {
+    border-bottom: 1px solid #2f2f2f !important;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+
+.chzzk-grouper-group-container:last-child {
+    border-bottom: none !important;
+}
+
+.chzzk-grouper-group-item {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    padding: 5px 0 !important;
+    font-size: 14px !important;
+    position: relative !important;
+}
+
+.group-item-row-1, .group-item-row-2 {
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* ✨ [수정됨] 툴팁 위치의 기준으로 삼기 위해 relative 속성 추가 */
+.group-item-row-1 {
+    position: relative !important;
+}
+
+
+.group-item-row-2 {
+    justify-content: flex-end !important;
+    margin-top: 4px !important;
+}
+
+.group-name-span {
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    cursor: pointer;
+}
+
+.drag-handle {
+    cursor: grab !important;
+    color: #888;
+    padding: 0 2px;
+    user-select: none;
+}
+
+.drag-handle:active {
+    cursor: grabbing !important;
+}
+
+.group-drag-handle {
+    font-size: 20px;
+}
+
+.streamer-drag-handle {
+    font-size: 18px;
+    writing-mode: vertical-rl;
+}
+
+.group-buttons {
+    display: flex !important;
+    gap: 8px !important;
+}
+
+.chzzk-grouper-streamer-item {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 5px 0 !important;
+}
+
+.chzzk-grouper-streamer-item.drop-indicator {
+    border-top: 2px solid #00c73c !important;
+}
+
+.chzzk-grouper-streamer-item a {
+    position: relative !important;
+    text-decoration: none !important;
+    color: inherit !important;
+    display: flex !important;
+    align-items: center !important;
+    flex-grow: 1 !important;
+    min-width: 0;
+}
+
+.chzzk-grouper-streamer-item a:hover > .chzzk-grouper-tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.chzzk-grouper-streamer-item a:hover {
+    text-decoration: underline !important;
+}
+
+.chzzk-grouper-streamer-item a span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chzzk-grouper-streamer-profile {
+    width: 26px !important;
+    height: 26px !important;
+    border-radius: 50% !important;
+    margin-right: 10px !important;
+    object-fit: cover !important;
+    border: 1px solid transparent !important;
+}
+
+.streamer-delete-btn {
+    background-color: #4f4f4f !important;
+    color: #e0e0e0 !important;
+    border: none !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    font-size: 12px !important;
+    padding: 4px 8px !important;
+    margin-left: 4px !important;
+    flex-shrink: 0 !important;
+    transition: background-color 0.2s, color 0.2s !important;
+}
+
+.streamer-delete-btn:hover {
+    background-color: #e53e3e !important;
+    color: white !important;
+}
+
+/* 툴팁 기본 스타일 */
+.chzzk-grouper-tooltip {
+    visibility: hidden;
+    opacity: 0;
+    width: 240px !important;      /* [수정] 고정 px 단위로 변경 */
+    overflow-wrap: break-word; /* [추가] 긴 글자가 짤리지 않고 줄바꿈되도록 설정 */
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; 
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: normal;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+/* 툴팁 화살표 스타일 */
+.chzzk-grouper-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+}
+
+/* ✨ [수정됨] 이름 래퍼에 마우스를 올렸을 때, 그 바로 뒤에 오는 툴팁을 표시 */
+.group-name-wrapper:hover + .chzzk-grouper-tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.group-name-wrapper {
+    position: relative !important;
+    flex-grow: 1 !important;
+    min-width: 0 !important;
+    /* ✨ [수정됨] 아래 3개 속성은 이름 래퍼가 아니라 실제 텍스트인 span으로 이동 */
+}
+
+/* ✨ [추가됨] ... 처리를 위해 overflow 속성을 span으로 이동 */
+.group-name-span {
+    display: block; /* text-overflow를 적용하기 위해 block 요소로 변경 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    cursor: pointer;
+}
+
+/* [추가] 생방송 상태 표시를 위한 스타일 */
+
+.live-status-container {
+    display: flex !important;
+    align-items: center !important;
+    margin-left: auto !important;
+    padding-left: 8px !important;
+    flex-shrink: 0 !important;
+}
+
+.live-dot {
+    width: 8px !important;
+    height: 8px !important;
+    background-color: #ff0000 !important;
+    border-radius: 50% !important;
+    margin-right: 5px !important;
+    box-shadow: 0 0 5px #ff0000 !important;
+}
+
+.viewer-count {
+    font-size: 13px !important;
+    color: #f0f0f0 !important;
+    font-weight: bold !important;
+}
